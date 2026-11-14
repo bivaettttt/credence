@@ -114,6 +114,18 @@ def detail(conn, item, actor):
     snapshots = many(
         conn, "SELECT * FROM snapshots WHERE app_id=:id ORDER BY version", id=id
     )
+    company = (
+        snapshots[-1]["payload"]["organization"]
+        if snapshots
+        else one(
+            conn, "SELECT * FROM organizations WHERE id=:id", id=item["organization_id"]
+        )
+    )
+    product = (
+        snapshots[-1]["payload"]["product"]
+        if snapshots
+        else one(conn, "SELECT * FROM products WHERE id=:id", id=item["product_id"])
+    )
     if actor["role"] == Role.APPLICANT:
         evidence = [row for row in evidence if row["kind"] == "DECISION"]
         events = [
@@ -123,6 +135,11 @@ def detail(conn, item, actor):
         ]
     return {
         **item,
+        "company": company,
+        "product_terms": product,
+        "submission_checks": eligibility(
+            item["data"], product, docs, company["active"]
+        ),
         "documents": docs,
         "evidence": evidence,
         "events": events,

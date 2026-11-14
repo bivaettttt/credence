@@ -43,20 +43,19 @@ test("three roles process, return and accept a real application", async ({
   ).toBeVisible();
   await shot(page, "products");
   await page.getByRole("link", { name: "Компании" }).click();
-  await page.getByLabel("Название компании").fill("Северная логистика");
+  const company = "Северная логистика " + Date.now().toString().slice(-5);
+  await page.getByLabel("Название компании").fill(company);
   await page.getByLabel("Отрасль").fill("Логистика");
   await page
     .getByLabel("Профиль", { exact: true })
     .fill("Синтетический грузовой оператор");
   await click(page, "Создать компанию");
-  await expect(
-    page.getByRole("cell", { name: "Северная логистика" }),
-  ).toBeVisible();
+  await expect(page.getByRole("cell", { name: company })).toBeVisible();
   await page.getByRole("link", { name: "Мои заявки" }).click();
   await page.getByRole("link", { name: "Новая заявка" }).click();
   await page
     .getByRole("combobox", { name: "Компания", exact: true })
-    .selectOption({ label: "Северная логистика" });
+    .selectOption({ label: company });
   await page
     .getByRole("combobox", { name: "Продукт", exact: true })
     .selectOption({ label: "Оборотное финансирование" });

@@ -1,7 +1,13 @@
 import "@fontsource/ibm-plex-sans/400.css";
 import "@fontsource/ibm-plex-sans/600.css";
 import "./styles.css";
-import { useEffect, useState, type ReactNode, type FormEvent } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type ReactNode,
+  type FormEvent,
+} from "react";
 import { createRoot } from "react-dom/client";
 import {
   type LucideIcon,
@@ -642,6 +648,7 @@ function ApplicationView({
   const [error, setError] = useState<unknown>();
   const [busy, setBusy] = useState(false);
   const [edit, setEdit] = useState(false);
+  const retries = useRef(new Map<string, string>());
   const [tab, setTab] = useState("summary");
   const a = query.data;
   async function send(
@@ -653,13 +660,15 @@ function ApplicationView({
     if (!a) return;
     setBusy(true);
     setError(null);
+    const payload = { revision: a.revision, ...body };
+    const fingerprint = JSON.stringify([suffix, payload]);
+    const key = critical
+      ? (retries.current.get(fingerprint) ?? crypto.randomUUID())
+      : undefined;
+    if (key) retries.current.set(fingerprint, key);
     try {
-      await api(
-        path + suffix,
-        method,
-        { revision: a.revision, ...body },
-        critical ? crypto.randomUUID() : undefined,
-      );
+      await api(path + suffix, method, payload, key);
+      retries.current.clear();
       setEdit(false);
       update();
     } catch (error) {
@@ -715,6 +724,18 @@ function ApplicationView({
       </div>
       {tab === "summary" && (
         <>
+          <Panel title="Компания и продукт">
+            <div className="pad stack">
+              <strong>{a.company.name}</strong>
+              <p>
+                {a.company.industry} · {a.company.profile}
+              </p>
+              <p>
+                {a.product_terms.name} · редакция {a.product_terms.version} ·{" "}
+                {a.product_terms.rate / 100}% годовых
+              </p>
+            </div>
+          </Panel>
           <Panel title="Запрошенные условия">
             {edit ? (
               <form
@@ -745,6 +766,13 @@ function ApplicationView({
               </div>
             )}
           </Panel>
+          {editable && a.submission_checks && (
+            <Panel title="Готовность к подаче">
+              <div className="pad">
+                <Checks checks={a.submission_checks} />
+              </div>
+            </Panel>
+          )}
           <Panel title="Учебные документы">
             <Table
               headers={["Тип", "Файл / запись", "Версия", "Статус"]}

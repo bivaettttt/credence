@@ -1,0 +1,8 @@
+stateDiagram-v2
+ [*] --> OPEN: Approved decision commits
+ OPEN --> ACCEPTED: Accept while current
+ OPEN --> DECLINED: Decline while current
+ OPEN --> EXPIRED: Database deadline elapsed
+ ACCEPTED --> [*]
+ DECLINED --> [*]
+ EXPIRED --> [*]

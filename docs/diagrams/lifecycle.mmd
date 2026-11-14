@@ -1,0 +1,18 @@
+stateDiagram-v2
+ [*] --> DRAFT
+ DRAFT --> SUBMITTED: Submit complete snapshot
+ SUBMITTED --> REVIEW: Analyst claims
+ REVIEW --> REVIEW: Validate or assess
+ REVIEW --> INFO_REQUIRED: Request information
+ INFO_REQUIRED --> SUBMITTED: Resubmit new snapshot
+ REVIEW --> DECISION_PENDING: Recommend
+ DECISION_PENDING --> REVIEW: Risk officer returns
+ DECISION_PENDING --> REJECTED: Risk officer rejects
+ DECISION_PENDING --> OFFERED: Approve and issue offer
+ OFFERED --> ACCEPTED: Accept before deadline
+ OFFERED --> DECLINED: Decline before deadline
+ OFFERED --> EXPIRED: Materialize expiry
+ DRAFT --> WITHDRAWN
+ SUBMITTED --> WITHDRAWN
+ REVIEW --> WITHDRAWN
+ INFO_REQUIRED --> WITHDRAWN

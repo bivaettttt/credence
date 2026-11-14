@@ -76,6 +76,8 @@ export type Offer = {
 };
 export type Detail = Application & {
   evidence: Proof[];
+  company: Org;
+  product_terms: Product;
   events: Event[];
   documents: {
     id: string;

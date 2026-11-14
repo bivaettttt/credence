@@ -1,0 +1,13 @@
+erDiagram
+ USERS ||--o{ SESSIONS : authenticates
+ USERS ||--o{ ORGANIZATION_MEMBERS : represents
+ ORGANIZATIONS ||--o{ ORGANIZATION_MEMBERS : assigns
+ ORGANIZATIONS ||--o{ APPLICATIONS : submits
+ PRODUCTS ||--o{ APPLICATIONS : anchors
+ APPLICATIONS ||--o{ SNAPSHOTS : captures
+ APPLICATIONS ||--o{ DOCUMENTS : attaches
+ SNAPSHOTS ||--o{ EVIDENCE : grounds
+ EVIDENCE ||--o| OFFERS : authorizes
+ APPLICATIONS ||--o{ EVENTS : records
+ APPLICATIONS ||--o{ RECEIPTS : deduplicates
+ APPLICATIONS ||--o{ NOTIFICATIONS : notifies

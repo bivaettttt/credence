@@ -1,0 +1,88 @@
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Credence" targetNamespace="urn:credence">
+  <bpmn:process id="Flow" isExecutable="false">
+    <bpmn:startEvent id="Start" name="" />
+    <bpmn:task id="Task0" name="Edit draft and add documents" />
+    <bpmn:task id="Task1" name="Check membership and revision" />
+    <bpmn:task id="Task2" name="Evaluate pinned product rules" />
+    <bpmn:exclusiveGateway id="Gateway" name="Outcome" />
+    <bpmn:task id="Outcome0" name="Commit snapshot and SUBMITTED" />
+    <bpmn:endEvent id="End0" name="" />
+    <bpmn:task id="Outcome1" name="Return failed checks" />
+    <bpmn:endEvent id="End1" name="" />
+    <bpmn:sequenceFlow id="Edge0" sourceRef="Start" targetRef="Task0" name="" />
+    <bpmn:sequenceFlow id="Edge1" sourceRef="Task0" targetRef="Task1" name="" />
+    <bpmn:sequenceFlow id="Edge2" sourceRef="Task1" targetRef="Task2" name="" />
+    <bpmn:sequenceFlow id="Edge3" sourceRef="Task2" targetRef="Gateway" name="" />
+    <bpmn:sequenceFlow id="Edge4" sourceRef="Gateway" targetRef="Outcome0" name="Complete" />
+    <bpmn:sequenceFlow id="Edge5" sourceRef="Outcome0" targetRef="End0" name="" />
+    <bpmn:sequenceFlow id="Edge6" sourceRef="Gateway" targetRef="Outcome1" name="Incomplete" />
+    <bpmn:sequenceFlow id="Edge7" sourceRef="Outcome1" targetRef="End1" name="" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="View">
+    <bpmndi:BPMNPlane id="Plane" bpmnElement="Flow">
+      <bpmndi:BPMNShape id="StartShape" bpmnElement="Start">
+        <dc:Bounds x="20" y="112" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task0Shape" bpmnElement="Task0">
+        <dc:Bounds x="95" y="90" width="150" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task1Shape" bpmnElement="Task1">
+        <dc:Bounds x="280" y="90" width="150" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task2Shape" bpmnElement="Task2">
+        <dc:Bounds x="465" y="90" width="150" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="GatewayShape" bpmnElement="Gateway">
+        <dc:Bounds x="650" y="105" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Outcome0Shape" bpmnElement="Outcome0">
+        <dc:Bounds x="765" y="45" width="155" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End0Shape" bpmnElement="End0">
+        <dc:Bounds x="960" y="67" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Outcome1Shape" bpmnElement="Outcome1">
+        <dc:Bounds x="765" y="195" width="155" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End1Shape" bpmnElement="End1">
+        <dc:Bounds x="960" y="217" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Edge0Diagram" bpmnElement="Edge0">
+        <di:waypoint x="56" y="130" />
+        <di:waypoint x="95" y="130" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge1Diagram" bpmnElement="Edge1">
+        <di:waypoint x="245" y="130" />
+        <di:waypoint x="280" y="130" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge2Diagram" bpmnElement="Edge2">
+        <di:waypoint x="430" y="130" />
+        <di:waypoint x="465" y="130" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge3Diagram" bpmnElement="Edge3">
+        <di:waypoint x="615" y="130" />
+        <di:waypoint x="650" y="130" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge4Diagram" bpmnElement="Edge4">
+        <di:waypoint x="700" y="130" />
+        <di:waypoint x="725" y="130" />
+        <di:waypoint x="725" y="85" />
+        <di:waypoint x="765" y="85" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge5Diagram" bpmnElement="Edge5">
+        <di:waypoint x="920" y="85" />
+        <di:waypoint x="960" y="85" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge6Diagram" bpmnElement="Edge6">
+        <di:waypoint x="700" y="130" />
+        <di:waypoint x="725" y="130" />
+        <di:waypoint x="725" y="235" />
+        <di:waypoint x="765" y="235" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge7Diagram" bpmnElement="Edge7">
+        <di:waypoint x="920" y="235" />
+        <di:waypoint x="960" y="235" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

@@ -1,0 +1,57 @@
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Credence" targetNamespace="urn:credence">
+  <bpmn:process id="Flow" isExecutable="false">
+    <bpmn:startEvent id="Start" name="" />
+    <bpmn:task id="Task0" name="Request additional information" />
+    <bpmn:task id="Task1" name="Clear current evidence and notify applicant" />
+    <bpmn:task id="Task2" name="Amend draft and documents" />
+    <bpmn:task id="Task3" name="Submit fresh snapshot" />
+    <bpmn:endEvent id="End" name="" />
+    <bpmn:sequenceFlow id="Edge0" sourceRef="Start" targetRef="Task0" name="" />
+    <bpmn:sequenceFlow id="Edge1" sourceRef="Task0" targetRef="Task1" name="" />
+    <bpmn:sequenceFlow id="Edge2" sourceRef="Task1" targetRef="Task2" name="" />
+    <bpmn:sequenceFlow id="Edge3" sourceRef="Task2" targetRef="Task3" name="" />
+    <bpmn:sequenceFlow id="Edge4" sourceRef="Task3" targetRef="End" name="" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="View">
+    <bpmndi:BPMNPlane id="Plane" bpmnElement="Flow">
+      <bpmndi:BPMNShape id="StartShape" bpmnElement="Start">
+        <dc:Bounds x="20" y="112" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task0Shape" bpmnElement="Task0">
+        <dc:Bounds x="95" y="90" width="150" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task1Shape" bpmnElement="Task1">
+        <dc:Bounds x="280" y="90" width="150" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task2Shape" bpmnElement="Task2">
+        <dc:Bounds x="465" y="90" width="150" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task3Shape" bpmnElement="Task3">
+        <dc:Bounds x="650" y="90" width="150" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndShape" bpmnElement="End">
+        <dc:Bounds x="835" y="112" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Edge0Diagram" bpmnElement="Edge0">
+        <di:waypoint x="56" y="130" />
+        <di:waypoint x="95" y="130" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge1Diagram" bpmnElement="Edge1">
+        <di:waypoint x="245" y="130" />
+        <di:waypoint x="280" y="130" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge2Diagram" bpmnElement="Edge2">
+        <di:waypoint x="430" y="130" />
+        <di:waypoint x="465" y="130" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge3Diagram" bpmnElement="Edge3">
+        <di:waypoint x="615" y="130" />
+        <di:waypoint x="650" y="130" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge4Diagram" bpmnElement="Edge4">
+        <di:waypoint x="800" y="130" />
+        <di:waypoint x="835" y="130" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

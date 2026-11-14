@@ -22,3 +22,23 @@ ADR-04. Sessions use opaque random bearer tokens with stored hashes and Argon2id
 LOW < 25, MEDIUM 25–59, HIGH ≥ 60. Integer comparisons avoid division and precision drift. All complete cases go through manual underwriting and independent review. A request for additional data clears current eligibility, risk and recommendation pointers. Submission advances data version. Approving an application atomically creates one decision and a seven-day offer. Expiry is materialized by an explicit response attempt or expiry command.
 
 [Requirements and transition table](domain.md)
+
+## Data dictionary and boundaries
+
+| Resource | Storage and identity |
+|---|---|
+| Identity | users.role and active, sessions.digest with expiry, organization_members composite membership key |
+| Application | UUID and public sequence, pinned product ID, analyst assignment, revision and data version |
+| Material | documents keyed by application, type and version. snapshots keyed by application and data version |
+| Underwriting | evidence kind distinguishes eligibility, score, recommendation and final decision. Composite foreign key points to the exact snapshot |
+| Offer | Unique application and decision, sealed terms, deadline and monotonic state |
+| Audit and notice | events store actor, correlation, transition and reason. notifications belong to the recipient |
+| Idempotency | receipts bind actor, application and key to a request digest and saved response |
+
+The queue derives review work from state and analyst assignment. In-app timeline and administrative audit are views of the same event store. Document records contain synthetic metadata. PostgreSQL protects historical rows, with the database owner inside the trust boundary.
+
+**Access.** Applicants write to their organizations and applications. Analysts can claim submitted cases and write to assigned cases. Risk officers decide cases with a pending recommendation. Administrators can inspect records and maintain users and products. Operational commands use explicit endpoint and object checks.
+
+**Errors.** 401 for invalid session, 403 for role restrictions, 404 for unavailable objects, 409 for revision, state or key conflicts, 422 for malformed or ineligible input. Responses carry X-Request-ID. Registry accepts q, state and offset, returning up to 50 per page. Audit returns up to 100.
+
+[OpenAPI](openapi.json) · [Lifecycle](diagrams/lifecycle.mmd) · [Offer states](diagrams/offer.mmd) · [ERD](diagrams/erd.mmd) · [C4 context](diagrams/context.mmd) · [C4 containers](diagrams/containers.mmd) · [Use cases](diagrams/use-cases.puml) · [Sequence](diagrams/sequence.mmd) · [Submission BPMN](diagrams/submit.bpmn) · [Validation BPMN](diagrams/validate.bpmn) · [Additional information BPMN](diagrams/supplement.bpmn) · [Decision BPMN](diagrams/decide.bpmn)

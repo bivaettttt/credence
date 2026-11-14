@@ -1,0 +1,20 @@
+sequenceDiagram
+ actor Applicant
+ actor Analyst
+ actor Officer
+ participant API
+ participant PostgreSQL
+ Applicant->>API: Submit revision with key
+ API->>PostgreSQL: Lock application, check conditions, save snapshot
+ PostgreSQL-->>API: Submission and receipt committed
+ Analyst->>API: Claim and validate
+ Analyst->>API: Assess current snapshot
+ API->>PostgreSQL: Store factors, model version and score
+ Analyst->>API: Submit justified recommendation
+ Officer->>API: Decide with revision and new key
+ API->>PostgreSQL: Verify current evidence and independent officer
+ alt Approve
+ API->>PostgreSQL: Commit decision, offer, event and receipt
+ else Reject
+ API->>PostgreSQL: Commit decision, event and receipt
+ end

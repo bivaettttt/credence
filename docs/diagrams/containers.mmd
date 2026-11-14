@@ -1,0 +1,10 @@
+C4Container
+Person(user,"Authenticated user")
+System_Boundary(c,"Credence") {
+ Container(web,"Portal and workspace","React and nginx","Role-specific views")
+ Container(api,"Origination API","FastAPI","Scope, workflow and evidence")
+ ContainerDb(store,"Origination database","PostgreSQL","Snapshots, decisions, offers and audit")
+}
+Rel(user,web,"Uses","HTTP on localhost")
+Rel(web,api,"Calls","JSON")
+Rel(api,store,"Reads and updates","SQL")
