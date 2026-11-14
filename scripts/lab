@@ -1,0 +1,10 @@
+#!/bin/sh
+set -eu
+cd "$(dirname "$0")/.."
+export CREDENCE_LAB_MODE=1 CREDENCE_PORT="${CREDENCE_LAB_PORT:-8111}"
+case "${1:-up}" in
+ up) docker compose -p credence-lab up -d --build --wait ;;
+ stop) docker compose -p credence-lab down ;;
+ reset) docker compose -p credence-lab down -v && docker compose -p credence-lab up -d --build --wait ;;
+ *) exit 2 ;;
+esac
