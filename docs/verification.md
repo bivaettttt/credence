@@ -8,7 +8,7 @@
 | TC-04 | FR-06/07 | Terms match decision, expiry and exact principal sum, immutable rows. [Domain](../backend/credence/domain.py), [API verification](../scripts/verify.py) |
 | TC-05 | FR-08/09, NFR-03 | Traceable requests, real PostgreSQL transitions, portals and isolated scenarios. [Playwright](../frontend/e2e/flow.spec.ts) |
 
-Observed results: eight pytest cases, 14 laboratory scenarios and two Chromium flows passed. PostgreSQL rejected changes to immutable history. Concurrent edits and decisions produced one success and one conflict. Both contract drift and core formatting were checked. Four BPMN diagrams passed OMG schema validation.
+Observed results: eight pytest cases, 14 laboratory scenarios and three Chromium flows passed. PostgreSQL rejected changes to immutable history. Concurrent edits and decisions produced one success and one conflict. Both contract drift and core formatting were checked. Four BPMN diagrams passed OMG schema validation.
 
 ```sh
 scripts/lab up

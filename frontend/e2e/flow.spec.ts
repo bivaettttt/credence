@@ -119,7 +119,12 @@ test("three roles process, return and accept a real application", async ({
   await transition(page, "Подтвердить действие", "/request_info");
   await role(page, "applicant");
   await page.getByRole("link", { name: "Уведомления" }).click();
-  await expect(page.getByText("Уточните размер обязательств.")).toBeVisible();
+  await expect(
+    page
+      .getByRole("row")
+      .filter({ hasText: "Уточните размер обязательств." })
+      .filter({ has: page.locator('a[href="#' + detail + '"]') }),
+  ).toBeVisible();
   await page.evaluate((hash) => (location.hash = hash), detail);
   await click(page, "Изменить черновик");
   await page.getByLabel("Задолженность, коп.").fill("2000000");
@@ -173,4 +178,26 @@ test("laboratory produces persisted evidence and audit", async ({ page }) => {
     page.getByRole("cell", { name: "request_info", exact: false }).first(),
   ).toBeVisible();
   await shot(page, "audit");
+});
+
+test("mobile company register renders entered markup as text", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+  await login(page, "applicant");
+  await page.getByRole("link", { name: "Компании", exact: true }).click();
+  const name = "<b>Учебная компания " + Date.now() + "</b>";
+  await page.getByLabel("Название компании").fill(name);
+  await page.getByLabel("Отрасль").fill("Учебная");
+  await page
+    .getByLabel("Профиль", { exact: true })
+    .fill("Синтетические данные");
+  await click(page, "Создать компанию");
+  const cell = page.getByRole("cell", { name, exact: true });
+  await expect(cell).toBeVisible();
+  await expect(cell.locator("b")).toHaveCount(0);
+  await expect
+    .poll(() => page.evaluate(() => document.documentElement.scrollWidth))
+    .toBe(390);
 });
